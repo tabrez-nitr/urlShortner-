@@ -1,5 +1,8 @@
 const Url = require('../models/url');
 const ids = require('short-id');
+const path = require('path');
+const express = require('express');
+
 
 
 ids.configure({
@@ -11,18 +14,24 @@ ids.configure({
 
 
 
+
+//render all urls 
+async function handelGiveAllUrls(req , res) {
+    const urls = await Url.find()
+    return res.render('home' , { urls : urls } )
+}
+
 // create a short url 
-
-
 async function handelCreateShorturl (req , res){
-     const originalUrl = req.query.originalUrl;
+     const originalUrl = req.body.originalUrl;
     const newUrl = ids.generate();
     await Url.create({
         originalUrl : originalUrl,
         shortUrl : newUrl,
         visitTrack : []
     })
-    return res.json({ newUrl : newUrl})
+    return res.render ('home' , { id : newUrl})
+    // return res.json({ newUrl : newUrl})
 } 
 
 
@@ -30,7 +39,7 @@ async function handelCreateShorturl (req , res){
 // redirect to original url
 async function handelRedirectShorturl (req , res){
  const shortUrl = req.params.shortUrl;
-    const url = await Url.findOneAndUpdate({ shortUrl : shortUrl},{$push : { visitTrack : new Date().toISOString() }});
+    const url = await Url.findOneAndUpdate({ shortUrl : shortUrl},{ $push : { visitTrack : new Date().toISOString() }});
 
     if(!url){
         return res.status(404).json({ error : "No url found"});
@@ -39,4 +48,4 @@ async function handelRedirectShorturl (req , res){
     
 } 
 
-module.exports = { handelCreateShorturl , handelRedirectShorturl };
+module.exports = { handelCreateShorturl , handelRedirectShorturl  , handelGiveAllUrls};

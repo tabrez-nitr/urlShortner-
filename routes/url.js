@@ -1,10 +1,17 @@
 const routes = require('express').Router();
-const { handelCreateShorturl , handelRedirectShorturl } = require('../controller/url');
+const { handelCreateShorturl , handelRedirectShorturl , handelGiveAllUrls } = require('../controller/url');
 
 
-routes.get('/:shortUrl' , handelRedirectShorturl);
+// to get all urls 
+routes.get('/' , handelGiveAllUrls);
 
-routes.post('/' , handelCreateShorturl);
+
+// to redirect short url to original url
+routes.get('/url:shortUrl' , handelRedirectShorturl);
+
+
+// to create short url
+routes.post('/url' , handelCreateShorturl);
 
 
 module.exports = routes;

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <h1>Short Your Url</h1>
+   <form action="/url" method="POST">
+    <label for="">Enter Your URL</label>
+    <input type="text" name="originalUrl" placeholder="https://example.com" >
+    <button type="submit">Generate</button>
+   </form>
+   <div> 
+    <% if (locals.id){ %>
+        <h3>Short Url =  https://localhost:8000/url:<%= id %></h3>
+        <% } %>
+    
+   </div>
+</body>
+</html>
