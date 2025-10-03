@@ -15,7 +15,6 @@ ids.configure({
 
 
 async function handelCreateShorturl (req , res){
-
      const originalUrl = req.query.originalUrl;
     const newUrl = ids.generate();
     await Url.create({
@@ -31,7 +30,7 @@ async function handelCreateShorturl (req , res){
 // redirect to original url
 async function handelRedirectShorturl (req , res){
  const shortUrl = req.params.shortUrl;
-    const url = await Url.findOne({ shortUrl : shortUrl});
+    const url = await Url.findOneAndUpdate({ shortUrl : shortUrl},{$push : { visitTrack : new Date().toISOString() }});
 
     if(!url){
         return res.status(404).json({ error : "No url found"});
