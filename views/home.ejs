@@ -12,11 +12,30 @@
     <input type="text" name="originalUrl" placeholder="https://example.com" >
     <button type="submit">Generate</button>
    </form>
+   <br>
    <div> 
     <% if (locals.id){ %>
-        <h3>Short Url =  https://localhost:8000/url:<%= id %></h3>
+        <h3>Short Url =  https://localhost:8000/url/<%= id %></h3>
         <% } %>
     
    </div>
+   <% if (typeof urls !== "undefined" && urls.length > 0) { %>
+   <div>
+    <table>
+        <th>index</th>
+        <th>Short url</th>
+        <th>Redirect</th>
+        <th>clicks</th>
+        <% urls.forEach((url , index) => { %>
+           <tr>
+            <td><%= index+1  %></td>
+            <td><%= url.shortUrl %></td>
+            <td><%= url.originalUrl %></td>
+            <td><%= url.visitTrack.length %></td>
+           </tr>
+        <% }) %>
+    </table>
+   </div>
+    <% } %>
 </body>
 </html>

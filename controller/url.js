@@ -1,8 +1,7 @@
-const Url = require('../models/url');
-const ids = require('short-id');
-const path = require('path');
-const express = require('express');
-
+import Url from '../models/url.js';
+import ids from 'short-id';
+import path from 'path';
+import express from 'express';
 
 
 ids.configure({
@@ -47,5 +46,4 @@ async function handelRedirectShorturl (req , res){
     return res.redirect(url.originalUrl);
     
 } 
-
-module.exports = { handelCreateShorturl , handelRedirectShorturl  , handelGiveAllUrls};
+export  { handelCreateShorturl, handelRedirectShorturl, handelGiveAllUrls };
